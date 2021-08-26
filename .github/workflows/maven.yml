@@ -26,6 +26,6 @@ jobs:
       run: mvn -B package -Dserver.port=8080 --file pom.xml
     - name: List files in the repository
       run: |
-        ls ${{ github.workspace }}        
+        ls ${{ github.workspace }}/target        
     - run: echo "🍏 This job's status is ${{ job.status }}."
       
