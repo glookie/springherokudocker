@@ -27,7 +27,7 @@ jobs:
     - name: List files in the repository
       run: |
         mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
-        ls ${{ github.workspace }}/target/dependency
+      #  ls ${{ github.workspace }}/target/dependency
     
     #############################
     #- name: docker login
