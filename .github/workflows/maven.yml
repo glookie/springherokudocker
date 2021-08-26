@@ -25,8 +25,26 @@ jobs:
     - name: List files in the repository
       run: |
         mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
-      #  ls ${{ github.workspace }}/target/dependency
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifacts
+        path: target/dependency/
 
+      #  ls ${{ github.workspace }}/target/dependency
+      
+  prepare:
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: my-artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -R
+  
     #############################
     #- name: docker login
     #  env:
