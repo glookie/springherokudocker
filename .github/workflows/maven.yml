@@ -33,7 +33,7 @@ jobs:
 
       #  ls ${{ github.workspace }}/target/dependency
       
-  prepare:
+  docker:
       needs: build
       runs-on: ubuntu-latest
       steps:
@@ -42,6 +42,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: my-artifacts
+          path: target/dependency
 
       - name: Display structure of downloaded files
         run: ls -R
