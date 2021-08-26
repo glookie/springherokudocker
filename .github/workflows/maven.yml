@@ -26,6 +26,7 @@ jobs:
       run: mvn -B package -Dserver.port=8080 --file pom.xml
     - name: List files in the repository
       run: |
-        ls ${{ github.workspace }}/target        
+        mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+        ls ${{ github.workspace }}/target/dependency       
     - run: echo "🍏 This job's status is ${{ job.status }}."
       
