@@ -7,7 +7,6 @@ on:
     branches: [ master ]
 
 jobs:
-
   build:
 
     runs-on: ubuntu-latest
@@ -18,11 +17,16 @@ jobs:
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag glookie/privrepo:latest
+    #  run: |
+    #    docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+    #- name: Build the Docker image
+    #  run: docker build . --file Dockerfile --tag glookie/privrepo:latest
       
-    - name: Docker Push
-      run: docker push glookie/privrepo:latest
-
+    #- name: Docker Push
+    #  run: docker push glookie/privrepo:latest
+  prepare:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: List directory
+      run: ls
