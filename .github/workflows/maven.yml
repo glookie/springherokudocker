@@ -22,16 +22,11 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package -Dserver.port=8080 --file pom.xml
-    #- name: List files in the repository
-    #  run: |
-    #    mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
-    #  #  ls ${{ github.workspace }}/target/dependency
-  prepare:
-    runs-on: ubuntu-latest
-    steps:
-    - name: make dir
+    - name: List files in the repository
       run: |
         mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+      #  ls ${{ github.workspace }}/target/dependency
+
     #############################
     #- name: docker login
     #  env:
