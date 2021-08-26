@@ -37,10 +37,10 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag glookie/githubbuild:$(date +%s)
+      run: docker build . --file Dockerfile --tag glookie/githubbuild:latest
       
     - name: Docker Push
-      run: docker push glookie/githubbuild
+      run: docker push glookie/githubbuild:latest
 
     - run: echo "🍏 This job's status is ${{ job.status }}."
       
