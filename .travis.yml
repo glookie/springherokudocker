@@ -4,4 +4,6 @@ jdk:
 
 after_script:
   - mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
-  - ls target/dependency
+  - ls -R target/dependency
+  - docker build . --file Dockerfile --tag glookie/CICD:latest
+  - docker push glookie/CICD:latest
