@@ -4,6 +4,17 @@ jdk:
 
 after_script:
   - mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
-  - docker build . --file Dockerfile --tag $DOCKER_REPO:latest
+  
   - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-  - docker push $DOCKER_REPO:latest
+  - echo $(heroku auth:token) | docker login -u "$ HEROKU_USERNAME" --password-stdin registry.heroku.com 
+  - docker build . --file Dockerfile --tag $DOCKER_REPO:latest
+  - docker tag $DOCKER_REPO:latest registry.heroku.com/$HEROKU_APP_NAME/web
+ 
+ deploy: 
+  provider: script 
+  script: 
+    # push to dockerhub & heroku 
+    docker push $DOCKER_REPO:latest;
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web; 
+  on: 
+    branch: master
