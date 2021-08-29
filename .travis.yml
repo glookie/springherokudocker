@@ -5,9 +5,7 @@ jdk:
 after_script:
   - mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
   - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-  # install heroku CLI 
-  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
-  - echo $(heroku auth:token) | docker login -u "$ HEROKU_USERNAME" --password-stdin registry.heroku.com 
+  - echo "$(heroku auth:token)" | docker login -u "$ HEROKU_USERNAME" --password-stdin registry.heroku.com 
   - docker build . --file Dockerfile --tag $DOCKER_REPO:latest
   - docker tag $DOCKER_REPO:latest registry.heroku.com/$HEROKU_APPNAME/web
   - docker push $DOCKER_REPO:latest
