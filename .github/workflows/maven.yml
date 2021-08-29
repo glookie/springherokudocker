@@ -11,9 +11,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 8
@@ -24,3 +22,43 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package -Dserver.port=8080 --file pom.xml
+    - name: List files in the repository
+      run: |
+        mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifacts
+        path: target/dependency/
+        retention-days: 1
+
+      #  ls ${{ github.workspace }}/target/dependency
+      
+  docker:
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: my-artifacts
+          path: target/dependency
+
+      - name: Display structure of downloaded files
+        run: ls -R
+  
+    #############################
+      - name: docker login
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag glookie/privrepo:latest
+
+      - name: Docker Push
+        run: docker push glookie/privrepo:latest
+
+    #- run: echo "🍏 This job's status is ${{ job.status }}."
+      
