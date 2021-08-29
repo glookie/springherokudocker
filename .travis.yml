@@ -8,12 +8,4 @@ after_script:
   - echo $(heroku auth:token) | docker login -u "$ HEROKU_USERNAME" --password-stdin registry.heroku.com 
   - docker build . --file Dockerfile --tag $DOCKER_REPO:latest
   - docker tag $DOCKER_REPO:latest registry.heroku.com/$HEROKU_APP_NAME/web
-  
- deploy: 
-  provider: script 
-  script: 
-    # push to dockerhub & heroku 
-    docker push $DOCKER_REPO:latest;
-    docker push registry.heroku.com/$HEROKU_APP_NAME/web; 
-  on: 
-    branch: master
+  - docker push $DOCKER_REPO:latest
