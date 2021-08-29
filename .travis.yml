@@ -3,4 +3,5 @@ jdk:
   - openjdk11
 
 after_script:
-  - ls
+  - mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+  - ls target/dependency
