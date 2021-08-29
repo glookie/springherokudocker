@@ -10,4 +10,10 @@ after_script:
   - docker tag $DOCKER_REPO:latest registry.heroku.com/$HEROKU_APPNAME/web
   - docker push $DOCKER_REPO:latest
   - docker push registry.heroku.com/$HEROKU_APPNAME/web
-  - heroku container: release web --app $ HEROKU_APPNAME
+
+deploy:
+  provider: script
+  script:
+    heroku container: release web --app $ HEROKU_APPNAME
+  on:
+    all_branches: true
