@@ -4,6 +4,6 @@ jdk:
 
 after_script:
   - mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
-  - docker build . --file Dockerfile --tag glookie/travis_cicd:latest
+  - docker build . --file Dockerfile --tag $DOCKER_REPO:latest
   - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-  - docker push glookie/travis_cicd:latest
+  - docker push $DOCKER_REPO:latest
