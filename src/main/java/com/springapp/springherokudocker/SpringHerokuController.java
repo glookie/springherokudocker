@@ -13,5 +13,14 @@ public class SpringHerokuController {
     public Date getdate() {
         return Date.from(Instant.now());
     }
+
+    @GetMapping("/home")
+    public String getInfo(){
+        if(System.getenv("MYCUSTOM")!=null)
+            return System.getenv("MYCUSTOM");
+        else
+            return "Hello";
+        
+    }
 }
 
