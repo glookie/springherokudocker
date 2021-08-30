@@ -12,5 +12,5 @@ after_script:
   - docker push registry.heroku.com/$HEROKU_APPNAME/web
   - heroku container:release web -a $HEROKU_APPNAME
   - echo $TRAVIS_COMMIT_MESSAGE
-  - eroku config:set MYCUSTOM=$TRAVIS_COMMIT_MESSAGE -a $HEROKU_APPNAME
+  - heroku config:set MYCUSTOM=$TRAVIS_COMMIT_MESSAGE -a $HEROKU_APPNAME
 
